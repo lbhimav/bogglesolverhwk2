@@ -1,0 +1,58 @@
+/**
+ * BoardLocation
+ * For CS3134 F08 HW2
+ *
+ * This class simply bundles two integers together, one for column and
+ * one for row.  This is complete; you don't need to make any changes
+ * to it.
+ */
+public class BoardLocation {
+    
+    private int row, column;
+    private boolean taken;
+
+    /**
+     * Construct a new BoardLocation from two coordinates.
+     */
+    public BoardLocation (int column, int row) {
+    	this.row = row;
+    	this.column = column;
+    	this.taken = false;
+    }
+
+    /**
+     * Return the row coordinate.
+     */
+    public int row () {
+	return row;
+    }
+
+    /**
+     * Return the column coordinate.
+     */
+    public int column () {
+	return column;
+    }
+    
+    /**
+     * Mark location as taken
+     */
+    public void taken(){
+    	this.taken = true;
+    }
+    
+    /**
+     * Reset taken
+     */
+    public void resetTaken(){
+    	this.taken = false;
+    }
+    
+    /**
+     * Get taken
+     */
+    public boolean isTaken(){
+    	return this.taken;
+    }
+
+}
