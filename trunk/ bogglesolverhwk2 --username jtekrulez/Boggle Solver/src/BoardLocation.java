@@ -9,15 +9,12 @@
 public class BoardLocation {
     
     private int row, column;
-    private boolean taken;
-
     /**
      * Construct a new BoardLocation from two coordinates.
      */
     public BoardLocation (int column, int row) {
     	this.row = row;
     	this.column = column;
-    	this.taken = false;
     }
 
     /**
@@ -33,26 +30,4 @@ public class BoardLocation {
     public int column () {
 	return column;
     }
-    
-    /**
-     * Mark location as taken
-     */
-    public void taken(){
-    	this.taken = true;
-    }
-    
-    /**
-     * Reset taken
-     */
-    public void resetTaken(){
-    	this.taken = false;
-    }
-    
-    /**
-     * Get taken
-     */
-    public boolean isTaken(){
-    	return this.taken;
-    }
-
 }

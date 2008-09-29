@@ -1,9 +1,8 @@
-
+/**
+ *BoggleSolver class
+ *	This class holds the main exectution code,  
+ **/
 public class BoggleSolver {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
