@@ -4,35 +4,49 @@
  **/
 public class BoggleSolver {
 	private Dictionary dictionary;
+	private int validPaths = 0;
 	public BoggleSolver(String fileDir, String letters){
 		try {
-			dictionary = new Dictionary(fileDir);
-			BoggleBoard bBoard = new BoggleBoard(letters);
-			Word wordSoFar = new Word();
-			bBoard.printBoard();
-			for(int i = 0; i<bBoard.dimensions(); i++){
-				for(int j=0; j<bBoard.dimensions(); j++){
-					wordSoFar.addLetter(bBoard.letterAtLocation(new BoardLocation(i,j)));			
-				}
-			}
+			dictionary = new Dictionary(fileDir);			
 		} catch (Exception e) {
 			System.out.println("Error: "+e);
 			System.exit(0);
 		}
+		System.out.println("Creating boggle board...");
+		BoggleBoard bBoard = new BoggleBoard(letters);
+		bBoard.printBoard();
+		//for(int i = 0; i<bBoard.dimensions(); i++){
+			//for(int j=0; j<bBoard.dimensions(); j++){
+				Word wordSoFar = new Word();
+				BoardLocation curLoc = new BoardLocation(0,0);
+				Word newWord = wordSoFar.makeCopy().addLetter(bBoard.letterAtLocation(curLoc));
+				bBoard.markAsTaken(curLoc);
+				recurseWords(newWord, bBoard.makeCopy(), curLoc);
+			//}
+		//}
+		System.out.println("There are "+validPaths+" valid paths.");
 	}
 	
-	public int recurseWords(Word wordSoFar, BoggleBoard bBoard, BoardLocation loc){
-		if(wordSoFar.length() >= 3 && dictionary.wordsExistThatStartWith(wordSoFar.toString())){
-			return 0;
+	public void recurseWords(Word wordSoFar, BoggleBoard bBoard, BoardLocation loc){
+		String str = wordSoFar.toString();
+		System.out.println(str);		
+		
+		if(!dictionary.wordsExistThatStartWith(str)){
+			return;
 		}
-		if(wordSoFar.length() >= 3 && dictionary.containsWord(wordSoFar.toString())){
-			System.out.println("Word: "+wordSoFar.toString());
+		
+		if(wordSoFar.length() > 2 && dictionary.containsWord(str)){
+			System.out.println("Word: "+str);
+			++validPaths;
 		}
+		
 		BoardLocation[] adjLocations = bBoard.getAdjacentUntakens(loc);
+		
 		for(int i=0; i<adjLocations.length; i++){
-			recurseWords(wordSoFar.addLetter(bBoard.letterAtLocation(adjLocations[i])), bBoard.makeCopy(), adjLocations[i]);
+			wordSoFar.addLetter(bBoard.letterAtLocation(adjLocations[i]));
+			bBoard.markAsTaken(adjLocations[i]);
+			recurseWords(wordSoFar.makeCopy(), bBoard.makeCopy(), adjLocations[i]);
 		}
-		return 0;
 	}
 	
 	public static void main(String[] args) {
@@ -50,6 +64,7 @@ public class BoggleSolver {
 			}
 		}catch(Exception e){
 			System.out.println("Error: "+e);
+			e.printStackTrace();
 			System.out.println("Please rerun program");
 			System.exit(0);
 		}

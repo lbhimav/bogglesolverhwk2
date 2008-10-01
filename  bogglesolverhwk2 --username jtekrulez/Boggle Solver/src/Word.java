@@ -12,12 +12,14 @@ import java.util.LinkedList;
 public class Word {
 	private LinkedList<String> word;
 	private Iterator<String> iterator;
+	private int length;
     /**
      * Constructor.
      */
     public Word() {
     	word = new LinkedList<String>();
     	iterator = word.iterator();
+    	length = 0;
     }
     private Word(LinkedList<String> w){
     	word = w;
@@ -28,23 +30,24 @@ public class Word {
      */
     public Word addLetter (String letter) {
     	word.add(letter);
+    	length++;
     	return makeCopy();
     }
     /**
      *Returns length of word 
      **/
     public int length(){
-    	return toString().length();
+    	return length;
     }
     /**
      * "Flatten" the word back into a String.
      */
     public String toString() {
-    	String str = "";
+    	StringBuffer str = new StringBuffer();
     	while(iterator.hasNext()){
-    		str += iterator.next();
+    		str.append(iterator.next());
     	}
-    	return str;
+    	return str.toString();
     }
 
     /**

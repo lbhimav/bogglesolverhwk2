@@ -21,7 +21,6 @@ public class BoggleBoard {
      * each square.  
      */
     public BoggleBoard (String letters){
-    	System.out.println("Creating boggle board...");
     	letters = letters.toUpperCase();
     	char[] inputLetters = letters.toCharArray();
     	width = height = (int)Math.sqrt(inputLetters.length);
@@ -77,8 +76,8 @@ public class BoggleBoard {
      * Return the letter at a particular location.
      */
     public String letterAtLocation(BoardLocation location) {
-    	markAsTaken(location);
-		return boggleBoard[location.row()][location.column()];
+		String letterAtLocation = boggleBoard[location.column()][location.row()];
+    	return letterAtLocation;
     }
 
     /**
@@ -86,7 +85,7 @@ public class BoggleBoard {
      *  the board as being taken.
      */
     public void markAsTaken(BoardLocation takenLocation) {
-    	boggleBoard[takenLocation.row()][takenLocation.column()] = "#";
+    	boggleBoard[takenLocation.column()][takenLocation.row()] = "@";
     }
 
     /**
@@ -95,47 +94,47 @@ public class BoggleBoard {
      */
     public BoardLocation[] getAdjacentUntakens(BoardLocation location)  {
     	LinkedList<BoardLocation> locs = new LinkedList<BoardLocation>();
-    	int x = location.row();
-    	int y = location.column();
-    	if(x-1 >=0 && y-1 >= 0){
-    		if(!boggleBoard[x-1][y-1].equalsIgnoreCase("#")){
-				locs.add(boardLocations[x-1][y-1]);
-			}
-    	}
-    	if(x-1 >=0 && y+1 <= height){
-    		if(!boggleBoard[x-1][y+1].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x-1][y+1]);
-			}
-    	}
+    	int y = location.row();
+    	int x = location.column();
     	if(x-1 >= 0){
-    		if(!boggleBoard[x-1][y].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x-1][y]);
+    		if(y-1 >= 0){
+    			if(!this.boggleBoard[x-1][y-1].equals("@")){
+    				locs.add(this.boardLocations[x-1][y-1]);
+    			}
+    		}
+    		if(!this.boggleBoard[x-1][y].equals("@")){
+    			locs.add(this.boardLocations[x-1][y]);
+    		}
+    		if(y+1 < height){
+    			if(!this.boggleBoard[x-1][y+1].equals("@")){
+    				locs.add(this.boardLocations[x-1][y+1]);
+    			}
     		}
     	}
-    	if(x+1 >= 0){
-    		if(!boggleBoard[x+1][y].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x+1][y]);
+    	if(x+1 < width){
+    		if(y-1 >= 0){
+    			if(!this.boggleBoard[x+1][y-1].equals("@")){
+    				locs.add(this.boardLocations[x+1][y-1]);
+    			}
     		}
-    	}
-    	if(x+1 <= height && y+1 <= width){
-    		if(!boggleBoard[x+1][y+1].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x+1][y+1]);
+    		if(!this.boggleBoard[x+1][y].equals("@")){
+    			locs.add(this.boardLocations[x+1][y]);
+    		}
+    		if(y+1 < height){
+    			if(!this.boggleBoard[x+1][y+1].equals("@")){
+    				locs.add(this.boardLocations[x+1][y+1]);
+    			}
     		}
     	}
     	if(y-1 >= 0){
-    		if(!boggleBoard[x][y-1].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x][y-1]);
+    		if(!this.boggleBoard[x][y-1].equals("@")){
+    			locs.add(this.boardLocations[x][y-1]);
     		}
     	}
-    	if(y+1 >= 0){
-    		if(!boggleBoard[x][y+1].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x][y+1]);
+    	if(y+1 <= height){
+    		if(!this.boggleBoard[x][y+1].equals("@")){
+    			locs.add(this.boardLocations[x][y+1]);
     		}
-    	}
-    	if(x+1 <= width && y-1 >= 0){
-    		if(!boggleBoard[x+1][y-1].equalsIgnoreCase("#")){
-    			locs.add(boardLocations[x+1][y-1]);
-			}
     	}
     	BoardLocation[] bLocs = new BoardLocation[locs.size()];
     	Iterator<BoardLocation> locit = locs.iterator();
