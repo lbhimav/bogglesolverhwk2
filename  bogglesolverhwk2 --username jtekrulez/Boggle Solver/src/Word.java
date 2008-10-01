@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -11,27 +10,20 @@ import java.util.LinkedList;
  */
 public class Word {
 	private LinkedList<String> word;
-	private Iterator<String> iterator;
 	private int length;
     /**
      * Constructor.
      */
     public Word() {
     	word = new LinkedList<String>();
-    	iterator = word.iterator();
     	length = 0;
-    }
-    private Word(LinkedList<String> w){
-    	word = w;
-    	iterator = w.iterator();
     }
     /**
      * Add a letter to the Word.
      */
-    public Word addLetter (String letter) {
+    public void addLetter (String letter) {
     	word.add(letter);
     	length++;
-    	return makeCopy();
     }
     /**
      *Returns length of word 
@@ -43,11 +35,11 @@ public class Word {
      * "Flatten" the word back into a String.
      */
     public String toString() {
-    	StringBuffer str = new StringBuffer();
-    	while(iterator.hasNext()){
-    		str.append(iterator.next());
+    	String tempStr = "";
+    	for(int i=0; i< word.size(); i++){
+    		tempStr += word.get(i);
     	}
-    	return str.toString();
+    	return tempStr;
     }
 
     /**
@@ -56,7 +48,12 @@ public class Word {
      * reference).
      */
     public Word makeCopy() {
-    	return new Word(word);
+    	String str = this.toString();
+    	Word newWord = new Word();
+    	for(int i = 0; i< str.length(); i++){
+    		newWord.addLetter(""+str.charAt(i));
+    	}
+    	return newWord;
     }
 
 }
