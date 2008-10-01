@@ -15,38 +15,38 @@ public class BoggleSolver {
 		System.out.println("Creating boggle board...");
 		BoggleBoard bBoard = new BoggleBoard(letters);
 		bBoard.printBoard();
-		//for(int i = 0; i<bBoard.dimensions(); i++){
-			//for(int j=0; j<bBoard.dimensions(); j++){
+		for(int i = 0; i<bBoard.dimensions(); i++){
+			for(int j=0; j<bBoard.dimensions(); j++){
 				Word wordSoFar = new Word();
-				BoardLocation curLoc = new BoardLocation(0,0);
-				Word newWord = wordSoFar.makeCopy().addLetter(bBoard.letterAtLocation(curLoc));
+				BoardLocation curLoc = new BoardLocation(i,j);
+				wordSoFar.addLetter(bBoard.letterAtLocation(curLoc));
+				Word newWord = wordSoFar.makeCopy();
 				bBoard.markAsTaken(curLoc);
 				recurseWords(newWord, bBoard.makeCopy(), curLoc);
-			//}
-		//}
+			}
+		}
 		System.out.println("There are "+validPaths+" valid paths.");
 	}
 	
 	public void recurseWords(Word wordSoFar, BoggleBoard bBoard, BoardLocation loc){
 		String str = wordSoFar.toString();
-		System.out.println(str);		
-		
+		BoardLocation[] adjLoc = bBoard.getAdjacentUntakens(loc);
 		if(!dictionary.wordsExistThatStartWith(str)){
+			System.out.println("Words no in dictionary "+str);
 			return;
+		}else{
+			if(wordSoFar.length() > 2 && dictionary.containsWord(str)){
+				System.out.println("Word: "+str);
+				validPaths++;
+			}
+			for(int i =0; i< adjLoc.length; i++){
+				Word newWord = wordSoFar.makeCopy();
+				newWord.addLetter(bBoard.letterAtLocation(adjLoc[i]));
+				bBoard.markAsTaken(adjLoc[i]);
+				recurseWords(newWord, bBoard.makeCopy(), adjLoc[i]);
+			}
 		}
 		
-		if(wordSoFar.length() > 2 && dictionary.containsWord(str)){
-			System.out.println("Word: "+str);
-			++validPaths;
-		}
-		
-		BoardLocation[] adjLocations = bBoard.getAdjacentUntakens(loc);
-		
-		for(int i=0; i<adjLocations.length; i++){
-			wordSoFar.addLetter(bBoard.letterAtLocation(adjLocations[i]));
-			bBoard.markAsTaken(adjLocations[i]);
-			recurseWords(wordSoFar.makeCopy(), bBoard.makeCopy(), adjLocations[i]);
-		}
 	}
 	
 	public static void main(String[] args) {

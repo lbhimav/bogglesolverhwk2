@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -131,15 +130,14 @@ public class BoggleBoard {
     			locs.add(this.boardLocations[x][y-1]);
     		}
     	}
-    	if(y+1 <= height){
+    	if(y+1 < height){
     		if(!this.boggleBoard[x][y+1].equals("@")){
     			locs.add(this.boardLocations[x][y+1]);
     		}
     	}
     	BoardLocation[] bLocs = new BoardLocation[locs.size()];
-    	Iterator<BoardLocation> locit = locs.iterator();
     	for(int i = 0; i < locs.size(); i++){
-    		bLocs[i] = locit.next();
+    		bLocs[i] = locs.get(i);
     	}
     	
     	return bLocs;
