@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * BoggleBoard
  * For CS3134 F08 HW2
@@ -18,14 +21,17 @@ public class BoggleBoard {
      * each square.  
      */
     public BoggleBoard (String letters){
+    	System.out.println("Creating boggle board...");
+    	letters = letters.toUpperCase();
     	char[] inputLetters = letters.toCharArray();
+    	width = height = (int)Math.sqrt(inputLetters.length);
     	boggleBoard = new String[height][width];
     	boardLocations = new BoardLocation[height][width];
-    	width = height = (int)Math.sqrt(inputLetters.length);
+    	int counter = 0;
     	for(int i = 0; i<height; i++){
     		for(int j=0; j<width; j++){
-    			boggleBoard[i][j] = ""+inputLetters[i+j];
-    			boardLocations[i][i] = new BoardLocation(j,i);
+    			boggleBoard[i][j] = ""+inputLetters[counter++];
+    			boardLocations[i][j] = new BoardLocation(i,j);
     		}
     	}
     }
@@ -44,9 +50,9 @@ public class BoggleBoard {
     	String str = "";
     	for(int i = 0; i<height; i++){
     		for(int j=0; j<width; j++){
-    			str += boggleBoard[i][j];
+    			str += boggleBoard[i][j]+" ";
     		}
-    		str="\n";
+    		str+="\n";
     	}
     	System.out.println(str);
     }
@@ -71,11 +77,13 @@ public class BoggleBoard {
      * Return the letter at a particular location.
      */
     public String letterAtLocation(BoardLocation location) {
+    	markAsTaken(location);
 		return boggleBoard[location.row()][location.column()];
     }
 
     /**
-     * Mark a particular letter on the board as being taken.
+     * Mark a particular letter on
+     *  the board as being taken.
      */
     public void markAsTaken(BoardLocation takenLocation) {
     	boggleBoard[takenLocation.row()][takenLocation.column()] = "#";
@@ -85,55 +93,56 @@ public class BoggleBoard {
      * Return a list of board locations that are (1) on the board, (2)
      * adjacent to a given location, and (3) not already taken.
      */
-    public String[] getAdjacentUntakens(BoardLocation location)  {
-    	String str = "";
+    public BoardLocation[] getAdjacentUntakens(BoardLocation location)  {
+    	LinkedList<BoardLocation> locs = new LinkedList<BoardLocation>();
     	int x = location.row();
     	int y = location.column();
     	if(x-1 >=0 && y-1 >= 0){
     		if(!boggleBoard[x-1][y-1].equalsIgnoreCase("#")){
-				str += boggleBoard[x-1][y-1];
+				locs.add(boardLocations[x-1][y-1]);
 			}
     	}
     	if(x-1 >=0 && y+1 <= height){
     		if(!boggleBoard[x-1][y+1].equalsIgnoreCase("#")){
-				str += boggleBoard[x-1][y+1];
+    			locs.add(boardLocations[x-1][y+1]);
 			}
     	}
     	if(x-1 >= 0){
     		if(!boggleBoard[x-1][y].equalsIgnoreCase("#")){
-    			str += boggleBoard[x-1][y];
+    			locs.add(boardLocations[x-1][y]);
     		}
     	}
     	if(x+1 >= 0){
     		if(!boggleBoard[x+1][y].equalsIgnoreCase("#")){
-    			str += boggleBoard[x+1][y];
+    			locs.add(boardLocations[x+1][y]);
     		}
     	}
     	if(x+1 <= height && y+1 <= width){
     		if(!boggleBoard[x+1][y+1].equalsIgnoreCase("#")){
-    			str += boggleBoard[x+1][y+1];
+    			locs.add(boardLocations[x+1][y+1]);
     		}
     	}
     	if(y-1 >= 0){
     		if(!boggleBoard[x][y-1].equalsIgnoreCase("#")){
-    			str += boggleBoard[x][y-1];
+    			locs.add(boardLocations[x][y-1]);
     		}
     	}
     	if(y+1 >= 0){
     		if(!boggleBoard[x][y+1].equalsIgnoreCase("#")){
-    			str += boggleBoard[x][y+1];
+    			locs.add(boardLocations[x][y+1]);
     		}
     	}
     	if(x+1 <= width && y-1 >= 0){
     		if(!boggleBoard[x+1][y-1].equalsIgnoreCase("#")){
-				str += boggleBoard[x+1][y-1];
+    			locs.add(boardLocations[x+1][y-1]);
 			}
     	}
-    	char[] temp = str.toCharArray();
-    	String [] tempstr = new String[temp.length];
-    	for(int i = 0; i< temp.length; i++){
-    		tempstr[i] = ""+temp[i];
+    	BoardLocation[] bLocs = new BoardLocation[locs.size()];
+    	Iterator<BoardLocation> locit = locs.iterator();
+    	for(int i = 0; i < locs.size(); i++){
+    		bLocs[i] = locit.next();
     	}
-    	return tempstr;
+    	
+    	return bLocs;
     }
 }

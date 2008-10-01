@@ -19,17 +19,23 @@ public class Word {
     	word = new LinkedList<String>();
     	iterator = word.iterator();
     }
-    public Word(LinkedList<String> w){
+    private Word(LinkedList<String> w){
     	word = w;
     	iterator = w.iterator();
     }
     /**
      * Add a letter to the Word.
      */
-    public void addLetter (String letter) {
+    public Word addLetter (String letter) {
     	word.add(letter);
+    	return makeCopy();
     }
-
+    /**
+     *Returns length of word 
+     **/
+    public int length(){
+    	return toString().length();
+    }
     /**
      * "Flatten" the word back into a String.
      */

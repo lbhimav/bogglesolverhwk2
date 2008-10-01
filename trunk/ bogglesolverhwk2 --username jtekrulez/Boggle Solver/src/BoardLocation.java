@@ -21,13 +21,13 @@ public class BoardLocation {
      * Return the row coordinate.
      */
     public int row () {
-	return row;
+    	return row;
     }
 
     /**
      * Return the column coordinate.
      */
     public int column () {
-	return column;
+    	return column;
     }
 }

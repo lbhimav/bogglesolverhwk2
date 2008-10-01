@@ -85,7 +85,7 @@ public class Dictionary {
      * Returns whether a word is in the dictionary.
      */
     public boolean containsWord (String word) {
-	return words.contains(word.toUpperCase());
+    	return words.contains(word.toUpperCase());
     }
 
     /**
@@ -93,7 +93,7 @@ public class Dictionary {
      * started with some initial prefix.
      */
     public boolean wordsExistThatStartWith (String prefix) {
-	return wordsExistThatStartWith.contains(prefix.toUpperCase());
+    	return wordsExistThatStartWith.contains(prefix.toUpperCase());
     }
 }
     
