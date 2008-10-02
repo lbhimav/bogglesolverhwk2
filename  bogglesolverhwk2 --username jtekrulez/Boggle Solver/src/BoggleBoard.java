@@ -84,6 +84,9 @@ public class BoggleBoard {
     /**
      * Mark a particular letter on
      *  the board as being taken.
+     *  
+     *  I marked the space as taken by putting an @ sign. In the late method I checked if my current tile was an @ sign 
+     *  or not and that is how to check if the tile is taken or not without the necessity of an extra boolean written in. 
      */
     public void markAsTaken(BoardLocation takenLocation) {
     	boggleBoard[takenLocation.column()][takenLocation.row()] = "@";
@@ -92,6 +95,12 @@ public class BoggleBoard {
     /**
      * Return a list of board locations that are (1) on the board, (2)
      * adjacent to a given location, and (3) not already taken.
+     * 
+     * I could not think of a better way to do this so I did this method by 
+     * writing in conditionals that would handle all of the 8 surrounding tiles
+     * that could possibly be adjacent to any tile. I used a linked list to hold all
+     * possible tiles for now and then transferred them to an array so it would be more 
+     * easily accessed.
      */
     public BoardLocation[] getAdjacentUntakens(BoardLocation location)  {
     	LinkedList<BoardLocation> locs = new LinkedList<BoardLocation>();
