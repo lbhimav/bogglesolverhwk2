@@ -12,20 +12,25 @@ public class BoggleSolver {
 			System.out.println("Error: "+e);
 			System.exit(0);
 		}
-		System.out.println("Creating boggle board...");
 		BoggleBoard bBoard = new BoggleBoard(letters);
 		bBoard.printBoard();
+		System.out.println("\n================================================================");
+		System.out.println("|                Searching for possible words                  |");
+		System.out.println("================================================================\n");
 		for(int i = 0; i<bBoard.dimensions(); i++){
 			for(int j=0; j<bBoard.dimensions(); j++){
 				Word wordSoFar = new Word();
 				BoardLocation curLoc = new BoardLocation(i,j);
 				wordSoFar.addLetter(bBoard.letterAtLocation(curLoc));
 				Word newWord = wordSoFar.makeCopy();
-				bBoard.markAsTaken(curLoc);
-				recurseWords(newWord, bBoard.makeCopy(), curLoc);
+				BoggleBoard newBoard = bBoard.makeCopy();
+				newBoard.markAsTaken(curLoc);
+				recurseWords(newWord, newBoard, curLoc);
 			}
 		}
-		System.out.println("There are "+validPaths+" valid paths.");
+		System.out.println("\n================================================================");
+		System.out.println("                    There are "+validPaths+" valid paths.            ");
+		System.out.println("================================================================\n");
 	}
 	
 	public void recurseWords(Word wordSoFar, BoggleBoard bBoard, BoardLocation loc){
