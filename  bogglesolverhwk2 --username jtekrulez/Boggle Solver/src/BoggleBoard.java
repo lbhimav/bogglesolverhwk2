@@ -45,14 +45,15 @@ public class BoggleBoard {
      * Print out the board.
      */
     public void printBoard () {
-    	String str = "";
+    	String str = "\n";
     	for(int i = 0; i<height; i++){
+    		str+= "|";
     		for(int j=0; j<width; j++){
     			str += boggleBoard[i][j]+" ";
     		}
+    		str+= "|";
     		str+="\n";
     	}
-    	str = str.substring(0,str.length()-2);
     	System.out.println(str);
     }
 
