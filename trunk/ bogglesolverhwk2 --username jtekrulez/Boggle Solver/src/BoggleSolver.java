@@ -30,19 +30,18 @@ public class BoggleSolver {
 	
 	public void recurseWords(Word wordSoFar, BoggleBoard bBoard, BoardLocation loc){
 		String str = wordSoFar.toString();
+		bBoard.markAsTaken(loc);
 		BoardLocation[] adjLoc = bBoard.getAdjacentUntakens(loc);
+		if(wordSoFar.length() > 2 && dictionary.containsWord(str)){
+			System.out.println("Word: "+str);
+			validPaths++;
+		}
 		if(!dictionary.wordsExistThatStartWith(str)){
-			System.out.println("Words no in dictionary "+str);
 			return;
 		}else{
-			if(wordSoFar.length() > 2 && dictionary.containsWord(str)){
-				System.out.println("Word: "+str);
-				validPaths++;
-			}
 			for(int i =0; i< adjLoc.length; i++){
 				Word newWord = wordSoFar.makeCopy();
 				newWord.addLetter(bBoard.letterAtLocation(adjLoc[i]));
-				bBoard.markAsTaken(adjLoc[i]);
 				recurseWords(newWord, bBoard.makeCopy(), adjLoc[i]);
 			}
 		}
