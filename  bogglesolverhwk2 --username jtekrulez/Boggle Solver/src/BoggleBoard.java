@@ -52,6 +52,7 @@ public class BoggleBoard {
     		}
     		str+="\n";
     	}
+    	str = str.substring(0,str.length()-2);
     	System.out.println(str);
     }
 
